@@ -1,0 +1,62 @@
+.navMenuWrapper {
+  position: fixed;
+  height: 100vh;
+  width: 300px;
+  top: 0;
+  left: 0;
+  z-index: 999;
+
+  background-color: #3c3c3c;
+  border-right: solid 1px #e0e0e0;
+}
+
+.menuHeader {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  padding-left: 4px;
+  padding-top: 2px;
+
+  button {
+    padding-left: 1rem;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    outline: none;
+  }
+  svg {
+    color: rgb(218, 218, 218);
+    width: 1.7rem;
+    height: 1.7rem;
+  }
+
+  .menuHeaderTitle {
+    padding-left: 30px;
+    font-size: 1.5rem;
+  }
+}
+
+.navOptionsList {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 20px;
+  .navOption {
+    padding-bottom: 15px;
+    font-size: 1.4rem;
+    color: rgb(218, 218, 218);
+
+    :active {
+      color: rgb(218, 218, 218);
+    }
+    svg {
+      margin-right: 10px;
+      width: 1.3rem;
+      height: 1.3rem;
+    }
+  }
+}
