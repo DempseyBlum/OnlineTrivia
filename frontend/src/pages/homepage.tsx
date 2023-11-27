@@ -1,15 +1,14 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { titleCreator } from "../../utils/titleCreator";
 import style from "../styles/homePage.module.scss";
-import {
-  ChatContainer,
-  MainContainer,
-  Message,
-  MessageInput,
-  MessageList,
-  TypingIndicator,
-} from "@chatscope/chat-ui-kit-react";
 import { MessageDirection } from "@chatscope/chat-ui-kit-react/src/types/unions";
+import {
+  TopicsReturnType,
+  allTopicsQuery,
+} from "../../queries/questionQueries";
+import { useStrapiQuery } from "../../hooks/useStrapiQuery";
+import { OperationVariables } from "@apollo/client";
+
 // Not being used, but decent format for pagination in the future.
 interface Meta {
   pagination: {
@@ -35,17 +34,17 @@ export default function HomePage() {
   }, []);
   const token = process.env.PUBLIC_STRAPI_API_TOKEN; // Auth not used yet.
 
-  // const {
-  //   loading,
-  //   error,
-  //   data,
-  // }: {
-  //   loading: boolean;
-  //   error?: any;
-  //   data: AllFactionsReturnType | undefined;
-  // } = useStrapiQuery(allFactionsQuery, {
-  //   variables: {},
-  // } as OperationVariables);
+  const {
+    loading,
+    error,
+    data,
+  }: {
+    loading: boolean;
+    error?: any;
+    data: TopicsReturnType | undefined;
+  } = useStrapiQuery(allTopicsQuery, {
+    variables: {},
+  } as OperationVariables);
 
   function ShowAnswer() {}
 

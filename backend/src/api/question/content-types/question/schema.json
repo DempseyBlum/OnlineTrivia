@@ -4,7 +4,7 @@
   "info": {
     "singularName": "question",
     "pluralName": "questions",
-    "displayName": "multi_choice_question",
+    "displayName": "multi choice question",
     "description": ""
   },
   "options": {
@@ -52,6 +52,10 @@
       "relation": "manyToMany",
       "target": "plugin::users-permissions.user",
       "inversedBy": "answered_multi_choice_questions"
+    },
+    "explanation": {
+      "type": "string",
+      "required": true
     }
   }
 }
