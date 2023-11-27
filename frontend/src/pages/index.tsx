@@ -16,7 +16,7 @@ function App() {
     <BrowserRouter>
       <ApolloProvider client={client}>
         <div className="page_wrapper">
-          <Header title={"Administratum"} />
+          <Header title={"TRIVIA GAME"} />
           {/* <Header title={"Army Builder"} /> */}
           <div className="page_content_wrapper">
             <Routes>

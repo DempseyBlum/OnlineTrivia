@@ -1,0 +1,57 @@
+{
+  "kind": "collectionType",
+  "collectionName": "questions",
+  "info": {
+    "singularName": "question",
+    "pluralName": "questions",
+    "displayName": "multi_choice_question",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "body": {
+      "type": "richtext",
+      "required": true
+    },
+    "correctAnswer": {
+      "type": "string",
+      "required": true
+    },
+    "wrongAnswer1": {
+      "type": "string",
+      "required": true
+    },
+    "wrongAnswer2": {
+      "type": "string",
+      "required": true
+    },
+    "wrongAnswer3": {
+      "type": "string",
+      "required": true
+    },
+    "topic": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::topic.topic",
+      "inversedBy": "multi_choice_questions"
+    },
+    "difficulty": {
+      "type": "enumeration",
+      "enum": [
+        "Easy",
+        "Medium",
+        "Hard",
+        "Impossible"
+      ]
+    },
+    "users_answered": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "answered_multi_choice_questions"
+    }
+  }
+}
