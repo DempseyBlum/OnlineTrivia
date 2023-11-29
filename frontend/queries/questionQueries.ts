@@ -37,7 +37,7 @@ interface TopicWithQuestions {
 }
 
 export interface TopicQuestionsReturnType {
-  questions: {
+  topic: {
     data: TopicWithQuestions;
   };
 }

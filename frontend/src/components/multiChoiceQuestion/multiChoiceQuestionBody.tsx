@@ -82,6 +82,8 @@ export default function MultiChoiceQuestionBody({
     } else {
       console.log("Wrong!");
     }
+
+    // Mark question as answered for User
   }
 
   return (

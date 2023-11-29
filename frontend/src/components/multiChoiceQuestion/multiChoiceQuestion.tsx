@@ -6,7 +6,9 @@ import { useEffect, useState } from "react";
 import { OperationVariables } from "@apollo/client";
 import { useStrapiQuery } from "../../../hooks/useStrapiQuery";
 import {
+  TopicQuestionsReturnType,
   UserQuestionIDsReturnType,
+  topicQuestionsQuery,
   userQuestionIDsByTopic,
 } from "../../../queries/questionQueries";
 import MultiChoiceQuestionBody from "./multiChoiceQuestionBody";
@@ -21,9 +23,9 @@ export default function MultiChoiceQuestion({
   // Get question IDs that User hasn't had yet. Then pick randomely and bring that one down.
 
   const {
-    loading,
-    error,
-    data,
+    loading: loadingAnswered,
+    error: errorAnswered,
+    data: dataAnswered,
   }: {
     loading: boolean;
     error?: any;
@@ -35,27 +37,51 @@ export default function MultiChoiceQuestion({
     },
   } as OperationVariables);
 
+  const {
+    loading: loadingQuestions,
+    error: errorQuestions,
+    data: dataQuestions,
+  }: {
+    loading: boolean;
+    error?: any;
+    data: TopicQuestionsReturnType | undefined;
+  } = useStrapiQuery(topicQuestionsQuery, {
+    variables: {
+      topicID: topicID,
+    },
+  } as OperationVariables);
+
   const [questionID, setQuestionID] = useState<string | undefined>(undefined);
 
   useEffect(() => {
-    if (data) {
+    if (dataAnswered && dataQuestions) {
+      console.log("dataAnswered", dataAnswered);
+      console.log("dataQuestions", dataQuestions);
+      const unansweredQuestions =
+        dataQuestions.topic.data.attributes.multi_choice_questions.data.filter(
+          (question) =>
+            !dataAnswered.usersPermissionsUser.data.attributes.answered_multi_choice_questions.data.includes(
+              question
+            )
+        );
+
       const randomIndex = Math.floor(
-        Math.random() *
-          data.usersPermissionsUser.data.attributes
-            .answered_multi_choice_questions.data.length
+        Math.random() * unansweredQuestions.length
       );
-      setQuestionID(
-        data.usersPermissionsUser.data.attributes
-          .answered_multi_choice_questions.data[randomIndex].id
-      );
+      setQuestionID(unansweredQuestions[randomIndex].id);
     }
-  }, [data]);
+  }, [dataAnswered, dataQuestions]);
 
   return (
     <div className={style.questionWrapper}>
-      {loading && <p>Loading...</p>}
-      {error && <p>Error: {error.toString()}</p>}
-      {data && questionID && (
+      {(loadingAnswered || loadingQuestions) && <p>Loading...</p>}
+      {(errorAnswered || errorQuestions) && (
+        <>
+          <p>Error: {errorAnswered.toString()}</p>
+          <p>Error: {errorQuestions.toString()}</p>
+        </>
+      )}
+      {(dataAnswered || dataQuestions) && questionID && (
         <MultiChoiceQuestionBody
           questionID={questionID}
         ></MultiChoiceQuestionBody>

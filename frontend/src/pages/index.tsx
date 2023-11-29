@@ -1,8 +1,9 @@
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, HashRouter } from "react-router-dom";
 import Header from "../components/header/header";
 import Homepage from "./homepage";
+import TopicPage from "./topic";
 
 // initialize apollo client
 const client = new ApolloClient({
@@ -13,7 +14,7 @@ const client = new ApolloClient({
 
 function App() {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <ApolloProvider client={client}>
         <div className="page_wrapper">
           <Header title={"TRIVIA GAME"} />
@@ -21,11 +22,12 @@ function App() {
           <div className="page_content_wrapper">
             <Routes>
               <Route path="/" element={<Homepage />} />
+              <Route path="/topic/:topicId" element={<TopicPage />} />
             </Routes>
           </div>
         </div>
       </ApolloProvider>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 
