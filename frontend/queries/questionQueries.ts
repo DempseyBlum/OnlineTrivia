@@ -4,10 +4,10 @@ interface Question {
   id: string;
   attributes: {
     body: string;
-    correct_answer: string;
-    wrong_answer_1: string;
-    wrong_answer_2: string;
-    wrong_answer_3: string;
+    correctAnswer: string;
+    wrongAnswer1: string;
+    wrongAnswer2: string;
+    wrongAnswer3: string;
     topic: {
       id: string;
       attributes: {
@@ -43,7 +43,7 @@ export interface TopicQuestionsReturnType {
 }
 
 export interface SingleQuestionReturnType {
-  questions: {
+  question: {
     data: Question;
   };
 }
@@ -51,6 +51,20 @@ export interface SingleQuestionReturnType {
 export interface TopicsReturnType {
   topics: {
     data: Topic[];
+  };
+}
+
+export interface UserQuestionIDsReturnType {
+  usersPermissionsUser: {
+    data: {
+      attributes: {
+        answered_multi_choice_questions: {
+          data: {
+            id: string;
+          }[];
+        };
+      };
+    };
   };
 }
 
@@ -91,12 +105,25 @@ export const topicQuestionsQuery = gql`
 
 export const questionByIDQuery = gql`
   query GetQuestionByID($questionID: ID!) {
-    coreKeyword(id: $questionID) {
+    question(id: $questionID) {
       data {
         id
         attributes {
-          display_name
-          description
+          body
+          correctAnswer
+          wrongAnswer1
+          wrongAnswer2
+          wrongAnswer3
+          topic {
+            data {
+              id
+              attributes {
+                display_name
+              }
+            }
+          }
+          difficulty
+          explanation
         }
       }
     }
@@ -110,6 +137,24 @@ export const allTopicsQuery = gql`
         id
         attributes {
           display_name
+        }
+      }
+    }
+  }
+`;
+
+export const userQuestionIDsByTopic = gql`
+  query GetUserQuestionIDsByTopic($userID: ID!, $topicID: ID!) {
+    usersPermissionsUser(id: $userID) {
+      data {
+        attributes {
+          answered_multi_choice_questions(
+            filters: { topic: { id: { eq: $topicID } } }
+          ) {
+            data {
+              id
+            }
+          }
         }
       }
     }

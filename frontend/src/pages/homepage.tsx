@@ -8,6 +8,7 @@ import {
 } from "../../queries/questionQueries";
 import { useStrapiQuery } from "../../hooks/useStrapiQuery";
 import { OperationVariables } from "@apollo/client";
+import MultiChoiceQuestion from "../components/multiChoiceQuestion/multiChoiceQuestion";
 
 // Not being used, but decent format for pagination in the future.
 interface Meta {
@@ -56,16 +57,7 @@ export default function HomePage() {
           <div className={style.sectionContent}></div>
         </section>
         <section className={style.questionSection}>
-          <h2 className={style.sectionHeader}>QUESTION</h2>
-          <div className={style.sectionContent}>
-            <div className={style.question}>
-              put question here (need to have spinner while waiting)
-            </div>
-            <div className={style.answer}>
-              put answer here (hide it until reveal is clicked)
-              <button onClick={ShowAnswer}>REVEAL</button>
-            </div>
-          </div>
+          <MultiChoiceQuestion topicID={"1"} userID={"1"} />
         </section>
         {/* {data ? (
           data.factions.data.map((faction, i) => (
