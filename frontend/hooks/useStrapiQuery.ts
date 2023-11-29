@@ -7,7 +7,10 @@ import {
   useQuery,
 } from "@apollo/client";
 
-export function useStrapiQuery<TData = any, TVariables = OperationVariables>(
+export function useStrapiQuery<
+  TData = any,
+  TVariables extends OperationVariables = OperationVariables
+>(
   query: DocumentNode | TypedDocumentNode<TData, TVariables>,
   options?: QueryHookOptions<TData, TVariables>
 ): QueryResult<TData, TVariables> {

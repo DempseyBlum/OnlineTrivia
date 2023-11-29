@@ -7,11 +7,13 @@ import { OperationVariables } from "@apollo/client";
 import { useStrapiQuery } from "../../../hooks/useStrapiQuery";
 import {
   TopicQuestionsReturnType,
-  UserQuestionIDsReturnType,
   topicQuestionsQuery,
-  userQuestionIDsByTopic,
 } from "../../../queries/questionQueries";
 import MultiChoiceQuestionBody from "./multiChoiceQuestionBody";
+import {
+  UserQuestionIDsReturnType,
+  userQuestionIDsByTopic,
+} from "../../../queries/userQueries";
 
 export default function MultiChoiceQuestion({
   topicID,
@@ -55,14 +57,14 @@ export default function MultiChoiceQuestion({
 
   useEffect(() => {
     if (dataAnswered && dataQuestions) {
-      console.log("dataAnswered", dataAnswered);
-      console.log("dataQuestions", dataQuestions);
+      const idsToRemove =
+        dataAnswered.usersPermissionsUser.data.attributes.answered_multi_choice_questions.data.map(
+          (question) => question.id
+        );
+
       const unansweredQuestions =
         dataQuestions.topic.data.attributes.multi_choice_questions.data.filter(
-          (question) =>
-            !dataAnswered.usersPermissionsUser.data.attributes.answered_multi_choice_questions.data.includes(
-              question
-            )
+          (question) => !idsToRemove.includes(question.id)
         );
 
       const randomIndex = Math.floor(
@@ -84,6 +86,7 @@ export default function MultiChoiceQuestion({
       {(dataAnswered || dataQuestions) && questionID && (
         <MultiChoiceQuestionBody
           questionID={questionID}
+          userID={userID}
         ></MultiChoiceQuestionBody>
       )}
     </div>

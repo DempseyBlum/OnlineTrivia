@@ -3,22 +3,28 @@ import style from "./multiChoiceQuestion.module.scss";
 import { faBars, faUser } from "@fortawesome/free-solid-svg-icons";
 import { NavMenu } from "../navMenu/navMenu";
 import { useEffect, useState } from "react";
-import { OperationVariables } from "@apollo/client";
+import { OperationVariables, useMutation } from "@apollo/client";
 import { useStrapiQuery } from "../../../hooks/useStrapiQuery";
 import {
   SingleQuestionReturnType,
-  UserQuestionIDsReturnType,
   questionByIDQuery,
-  userQuestionIDsByTopic,
 } from "../../../queries/questionQueries";
 import { shuffle } from "../../../utils/arrayShuffle";
 import QuestionButton from "../answerButton/answerButton";
 import AnswerButton from "../answerButton/answerButton";
+import { ADD_USER_QUESTION } from "../../../mutations/userMutations";
+import {
+  UserQuestionIDsReturnType,
+  allUserQuestionIDs,
+  userQuestionIDsByTopic,
+} from "../../../queries/userQueries";
 
 export default function MultiChoiceQuestionBody({
   questionID,
+  userID,
 }: {
   questionID: string;
+  userID: string;
 }) {
   const {
     loading,
@@ -31,6 +37,20 @@ export default function MultiChoiceQuestionBody({
   } = useStrapiQuery(questionByIDQuery, {
     variables: {
       questionID: questionID,
+    },
+  } as OperationVariables);
+
+  const {
+    loading: loadingUserQuestionIds,
+    error: errorUserQuestionIds,
+    data: dataUserQuestionIds,
+  }: {
+    loading: boolean;
+    error?: any;
+    data: UserQuestionIDsReturnType | undefined;
+  } = useStrapiQuery(allUserQuestionIDs, {
+    variables: {
+      userID: userID,
     },
   } as OperationVariables);
 
@@ -76,8 +96,25 @@ export default function MultiChoiceQuestionBody({
     }
   }
 
+  const [
+    updateUser,
+    { data: mutateData, loading: mutateLoading, error: mutateError },
+  ] = useMutation(ADD_USER_QUESTION);
+
   function CheckAnswer(isCorrect: boolean) {
     if (isCorrect) {
+      if (dataUserQuestionIds) {
+        const existingIds =
+          dataUserQuestionIds.usersPermissionsUser.data.attributes.answered_multi_choice_questions.data.map(
+            (question) => question.id
+          );
+        updateUser({
+          variables: {
+            userID: "1",
+            questionIDs: [...existingIds, questionID],
+          },
+        });
+      }
       console.log("Correct!");
     } else {
       console.log("Wrong!");

@@ -54,20 +54,6 @@ export interface TopicsReturnType {
   };
 }
 
-export interface UserQuestionIDsReturnType {
-  usersPermissionsUser: {
-    data: {
-      attributes: {
-        answered_multi_choice_questions: {
-          data: {
-            id: string;
-          }[];
-        };
-      };
-    };
-  };
-}
-
 export const topicQuestionsQuery = gql`
   query GetTopicQuestions($topicID: ID!) {
     topic(id: $topicID) {
@@ -137,24 +123,6 @@ export const allTopicsQuery = gql`
         id
         attributes {
           display_name
-        }
-      }
-    }
-  }
-`;
-
-export const userQuestionIDsByTopic = gql`
-  query GetUserQuestionIDsByTopic($userID: ID!, $topicID: ID!) {
-    usersPermissionsUser(id: $userID) {
-      data {
-        attributes {
-          answered_multi_choice_questions(
-            filters: { topic: { id: { eq: $topicID } } }
-          ) {
-            data {
-              id
-            }
-          }
         }
       }
     }
