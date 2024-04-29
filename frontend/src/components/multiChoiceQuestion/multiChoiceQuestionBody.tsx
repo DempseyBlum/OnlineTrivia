@@ -17,6 +17,7 @@ import {
   UserQuestionIDsReturnType,
   allUserQuestionIDs,
 } from "../../../queries/userQueries";
+import { Link } from "react-router-dom";
 
 export default function MultiChoiceQuestionBody({
   questionID,
@@ -110,7 +111,7 @@ export default function MultiChoiceQuestionBody({
     { data: mutateData, loading: mutateLoading, error: mutateError },
   ] = useMutation(ADD_ANSWERED_QUESTION);
 
-  function CheckAnswer(isCorrect: boolean) {
+  async function CheckAnswer(isCorrect: boolean) {
     setDisableButtons(true);
     setQestionAnswered(true);
 
@@ -123,7 +124,7 @@ export default function MultiChoiceQuestionBody({
       updateUser({
         variables: {
           userID: "1",
-          questionIDs: [...existingIds, questionID],
+          newQuestionIDs: [questionID],
         },
       });
     }
@@ -142,15 +143,21 @@ export default function MultiChoiceQuestionBody({
           <div className={style.answersWrapper}>{GetQuestions()}</div>
         </div>
       )}
-      <div className={style.questionControls} hidden={!questionAnswered}>
-        <button
-          className={style.nextButton}
-          onClick={() => {
-            window.location.reload();
-          }}
-        >
-          NEXT QUESTION
-        </button>
+      <div className={style.questionControls}>
+        <Link to={"/"}>
+          <button className={style.backButton}>BACK</button>
+        </Link>
+
+        <div className={style.nextButtonWrapper} hidden={!questionAnswered}>
+          <button
+            className={style.nextButton}
+            onClick={() => {
+              window.location.reload();
+            }}
+          >
+            NEXT QUESTION
+          </button>
+        </div>
       </div>
     </div>
   );

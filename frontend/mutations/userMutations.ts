@@ -3,10 +3,10 @@ import { gql } from "@apollo/client";
 // Add question id to answered question list of user
 // TODO: Currently overrides existing array.
 export const ADD_ANSWERED_QUESTION = gql`
-  mutation AddUserQuestion($userID: ID!, $questionIDs: [ID]) {
+  mutation AddAnsweredQuestion($userID: ID!, $newQuestionIDs: [ID]) {
     updateUsersPermissionsUser(
       id: $userID
-      data: { answered_multi_choice_questions: $questionIDs }
+      data: { answered_multi_choice_questions: $newQuestionID }
     ) {
       data {
         id
