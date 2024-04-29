@@ -12,11 +12,10 @@ import {
 import { shuffle } from "../../../utils/arrayShuffle";
 import QuestionButton from "../answerButton/answerButton";
 import AnswerButton from "../answerButton/answerButton";
-import { ADD_USER_QUESTION } from "../../../mutations/userMutations";
+import { ADD_ANSWERED_QUESTION } from "../../../mutations/userMutations";
 import {
   UserQuestionIDsReturnType,
   allUserQuestionIDs,
-  userQuestionIDsByTopic,
 } from "../../../queries/userQueries";
 
 export default function MultiChoiceQuestionBody({
@@ -54,6 +53,10 @@ export default function MultiChoiceQuestionBody({
     },
   } as OperationVariables);
 
+  const [disableButtons, setDisableButtons] = useState(false);
+  const [shuffled, setShuffled] = useState(false);
+  const [questionAnswered, setQestionAnswered] = useState(false);
+
   function GetQuestions() {
     // Shuffle questions
     if (data) {
@@ -76,13 +79,19 @@ export default function MultiChoiceQuestionBody({
         },
       ];
 
-      const shuffledAnswers = shuffle(answers);
+      // Shuffle questions. Using state to prevent re-shuffles after answering.
+      let shuffledAnswers = answers;
+      if (!shuffled) {
+        shuffledAnswers = shuffle(answers);
+        setShuffled(true);
+      }
 
       return (
         <>
           {shuffledAnswers.map((answer) => {
             return (
               <AnswerButton
+                questionAnswered={questionAnswered}
                 answer={answer.answer}
                 isCorrect={answer.isCorrect}
                 callback={CheckAnswer}
@@ -99,28 +108,25 @@ export default function MultiChoiceQuestionBody({
   const [
     updateUser,
     { data: mutateData, loading: mutateLoading, error: mutateError },
-  ] = useMutation(ADD_USER_QUESTION);
+  ] = useMutation(ADD_ANSWERED_QUESTION);
 
   function CheckAnswer(isCorrect: boolean) {
-    if (isCorrect) {
-      if (dataUserQuestionIds) {
-        const existingIds =
-          dataUserQuestionIds.usersPermissionsUser.data.attributes.answered_multi_choice_questions.data.map(
-            (question) => question.id
-          );
-        updateUser({
-          variables: {
-            userID: "1",
-            questionIDs: [...existingIds, questionID],
-          },
-        });
-      }
-      console.log("Correct!");
-    } else {
-      console.log("Wrong!");
-    }
+    setDisableButtons(true);
+    setQestionAnswered(true);
 
-    // Mark question as answered for User
+    // Regardless of if they got the question right, we want to update the user's answered questions.
+    if (dataUserQuestionIds) {
+      const existingIds =
+        dataUserQuestionIds.usersPermissionsUser.data.attributes.answered_multi_choice_questions.data.map(
+          (question) => question.id
+        );
+      updateUser({
+        variables: {
+          userID: "1",
+          questionIDs: [...existingIds, questionID],
+        },
+      });
+    }
   }
 
   return (
@@ -136,6 +142,16 @@ export default function MultiChoiceQuestionBody({
           <div className={style.answersWrapper}>{GetQuestions()}</div>
         </div>
       )}
+      <div className={style.questionControls} hidden={!questionAnswered}>
+        <button
+          className={style.nextButton}
+          onClick={() => {
+            window.location.reload();
+          }}
+        >
+          NEXT QUESTION
+        </button>
+      </div>
     </div>
   );
 }

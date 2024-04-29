@@ -12,7 +12,7 @@ import {
 import MultiChoiceQuestionBody from "./multiChoiceQuestionBody";
 import {
   UserQuestionIDsReturnType,
-  userQuestionIDsByTopic,
+  userAnsweredQuestionIDsByTopic,
 } from "../../../queries/userQueries";
 
 export default function MultiChoiceQuestion({
@@ -32,7 +32,7 @@ export default function MultiChoiceQuestion({
     loading: boolean;
     error?: any;
     data: UserQuestionIDsReturnType | undefined;
-  } = useStrapiQuery(userQuestionIDsByTopic, {
+  } = useStrapiQuery(userAnsweredQuestionIDsByTopic, {
     variables: {
       userID: userID,
       topicID: topicID,
