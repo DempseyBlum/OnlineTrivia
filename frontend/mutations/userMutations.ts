@@ -6,7 +6,7 @@ export const ADD_ANSWERED_QUESTION = gql`
   mutation AddAnsweredQuestion($userID: ID!, $newQuestionIDs: [ID]) {
     updateUsersPermissionsUser(
       id: $userID
-      data: { answered_multi_choice_questions: $newQuestionID }
+      data: { answered_multi_choice_questions: $newQuestionIDs }
     ) {
       data {
         id

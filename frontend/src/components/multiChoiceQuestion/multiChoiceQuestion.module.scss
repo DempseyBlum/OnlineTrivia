@@ -1,6 +1,12 @@
+.questionControls {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+}
+
 .nextButton {
   margin-top: 20px;
-  margin-left: 10px;
+  margin-right: 10px;
   background-color: #f5f5f5;
   color: #000000;
   border: none;

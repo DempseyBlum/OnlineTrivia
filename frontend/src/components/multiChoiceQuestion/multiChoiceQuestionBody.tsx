@@ -40,21 +40,6 @@ export default function MultiChoiceQuestionBody({
     },
   } as OperationVariables);
 
-  const {
-    loading: loadingUserQuestionIds,
-    error: errorUserQuestionIds,
-    data: dataUserQuestionIds,
-  }: {
-    loading: boolean;
-    error?: any;
-    data: UserQuestionIDsReturnType | undefined;
-  } = useStrapiQuery(allUserQuestionIDs, {
-    variables: {
-      userID: userID,
-    },
-  } as OperationVariables);
-
-  const [disableButtons, setDisableButtons] = useState(false);
   const [shuffled, setShuffled] = useState(false);
   const [questionAnswered, setQestionAnswered] = useState(false);
 
@@ -112,22 +97,14 @@ export default function MultiChoiceQuestionBody({
   ] = useMutation(ADD_ANSWERED_QUESTION);
 
   async function CheckAnswer(isCorrect: boolean) {
-    setDisableButtons(true);
     setQestionAnswered(true);
 
-    // Regardless of if they got the question right, we want to update the user's answered questions.
-    if (dataUserQuestionIds) {
-      const existingIds =
-        dataUserQuestionIds.usersPermissionsUser.data.attributes.answered_multi_choice_questions.data.map(
-          (question) => question.id
-        );
-      updateUser({
-        variables: {
-          userID: "1",
-          newQuestionIDs: [questionID],
-        },
-      });
-    }
+    updateUser({
+      variables: {
+        userID: "1",
+        newQuestionIDs: [questionID],
+      },
+    });
   }
 
   return (
