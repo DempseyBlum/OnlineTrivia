@@ -19,7 +19,7 @@ interface Question {
   };
 }
 
-interface Topic {
+export interface Topic {
   id: string;
   attributes: {
     display_name: string;

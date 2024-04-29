@@ -10,6 +10,11 @@ import { useStrapiQuery } from "../../hooks/useStrapiQuery";
 import { OperationVariables } from "@apollo/client";
 import MultiChoiceQuestion from "../components/multiChoiceQuestion/multiChoiceQuestion";
 import { Link } from "react-router-dom";
+import {
+  UserQuestionIDsReturnType,
+  userAnsweredQuestionIDsByTopic,
+} from "../../queries/userQueries";
+import TopicTile from "../components/topicTile/topicTile";
 
 // Not being used, but decent format for pagination in the future.
 interface Meta {
@@ -20,7 +25,7 @@ interface Meta {
   };
 }
 
-export default function HomePage() {
+export default function HomePage({ userID }: { userID: string }) {
   useEffect(() => {
     document.title = titleCreator("Homepage");
   }, []);
@@ -41,18 +46,11 @@ export default function HomePage() {
   return (
     <div className={style.homePageWrapper}>
       <section className={style.questionSection}>
-        <h2 className={style.sectionHeader}>TOPICS</h2>
-        <div className={style.sectionContent}>
+        <h2 className={style.topicsHeader}>TOPICS</h2>
+        <div className={style.topicsSelector}>
           {data &&
             data.topics.data.map((topic, i) => (
-              <div className={style.topicTile} key={topic.id.toString()}>
-                <h3 className={style.topicName}>
-                  {topic.attributes.display_name}
-                </h3>
-                <Link to={"/topic/" + topic.id}>
-                  <button className={style.unitsButton}>GET QUESTION</button>
-                </Link>
-              </div>
+              <TopicTile topic={topic} userID={userID} />
             ))}
         </div>
       </section>

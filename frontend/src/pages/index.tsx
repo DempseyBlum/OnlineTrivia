@@ -21,7 +21,7 @@ function App() {
           {/* <Header title={"Army Builder"} /> */}
           <div className="page_content_wrapper">
             <Routes>
-              <Route path="/" element={<Homepage />} />
+              <Route path="/" element={<Homepage userID={"1"} />} />
               <Route path="/topic/:topicId" element={<TopicPage />} />
             </Routes>
           </div>
