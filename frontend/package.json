@@ -1,7 +1,7 @@
 {
-  "name": "armylistbuilder",
+  "name": "quiz-app",
   "version": "1.0.0",
-  "description": "My attempt at create a more feature complete versionon of the official 40k army builder.",
+  "description": "A quiz app built with Next.js and GraphQL",
   "main": "index.js",
   "scripts": {
     "develop": "next dev -p 3001",

@@ -30,8 +30,8 @@ export const allUserQuestionIDs = gql`
   }
 `;
 
-export const userQuestionIDsByTopic = gql`
-  query GetUserQuestionIDsByTopic($userID: ID!, $topicID: ID!) {
+export const userAnsweredQuestionIDsByTopic = gql`
+  query GetUserAnsweredQuestionIDsByTopic($userID: ID!, $topicID: ID!) {
     usersPermissionsUser(id: $userID) {
       data {
         attributes {
