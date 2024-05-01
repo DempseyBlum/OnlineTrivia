@@ -3,7 +3,8 @@ import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import { BrowserRouter, Routes, Route, HashRouter } from "react-router-dom";
 import Header from "../components/header/header";
 import Homepage from "./homepage";
-import TopicPage from "./topic";
+import BoardPage from "./boardPage";
+import StandardQuestion from "./questionPages/standardQuestion";
 
 // initialize apollo client
 const client = new ApolloClient({
@@ -22,7 +23,11 @@ function App() {
           <div className="page_content_wrapper">
             <Routes>
               <Route path="/" element={<Homepage userID={"1"} />} />
-              <Route path="/topic/:topicId" element={<TopicPage />} />
+              <Route path="/board" element={<BoardPage userID={"1"} />} />
+              <Route
+                path="/board/question/:topicId"
+                element={<StandardQuestion userID={"1"} />}
+              />
             </Routes>
           </div>
         </div>

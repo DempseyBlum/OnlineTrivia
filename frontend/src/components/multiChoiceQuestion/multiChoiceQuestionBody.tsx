@@ -9,7 +9,7 @@ import {
   SingleQuestionReturnType,
   questionByIDQuery,
 } from "../../../queries/questionQueries";
-import { shuffle } from "../../../utils/arrayShuffle";
+import { QuestionShuffle } from "../../../utils/QuestionShuffle";
 import QuestionButton from "../answerButton/answerButton";
 import AnswerButton from "../answerButton/answerButton";
 import { ADD_ANSWERED_QUESTION } from "../../../mutations/userMutations";
@@ -68,7 +68,7 @@ export default function MultiChoiceQuestionBody({
       // Shuffle questions. Using state to prevent re-shuffles after answering.
       let shuffledAnswers = answers;
       if (!shuffled) {
-        shuffledAnswers = shuffle(answers);
+        shuffledAnswers = QuestionShuffle(answers);
         setShuffled(true);
       }
 
