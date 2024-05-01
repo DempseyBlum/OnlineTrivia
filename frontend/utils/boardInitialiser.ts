@@ -19,7 +19,7 @@ export const BoardInitialiser = (
       }
       return {
         tileID,
-        topicID: topicIDs[topicIndex],
+        topicID: topicIDs[topicIndex - 1],
       };
     });
   });

@@ -26,16 +26,12 @@ export const NavMenu = ({
         <h1 className={style.menuHeaderTitle}>{title}</h1>
       </div>
       <div className={style.navOptionsList}>
-        <Link to="/" onClick={CloseMenu}>
+        <Link to="" onClick={CloseMenu}>
           <div className={style.navOption}>
             <FontAwesomeIcon icon={faHome} />
             Home
           </div>
         </Link>
-        <div className={style.navOption}>
-          <FontAwesomeIcon icon={faFlag} />
-          Factions (dropdown)
-        </div>
       </div>
     </div>
   );

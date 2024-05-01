@@ -12,8 +12,6 @@ export default function Board({
   const topicIds = ["1", "2", "3", "4"];
   const boardMap = BoardInitialiser(topicIds, simpleBoxBoardTemplate);
 
-  console.log(boardMap);
-
   return (
     <div className={style.boardWrapper}>
       {boardMap.map((row, rowIndex) => {

@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { titleCreator } from "../../../utils/titleCreator";
-import style from "../styles/homePage.module.scss";
+import style from "./questionStyles.module.scss";
 import { useParams } from "react-router-dom";
 import QuestionBody from "../questionBody/questionBody";
 import { useStrapiQuery } from "../../../hooks/useStrapiQuery";
@@ -57,7 +57,7 @@ export default function StandardQuestion({
   const [questionID, setQuestionID] = useState<string | undefined>(undefined);
 
   useEffect(() => {
-    if (dataAnswered && dataQuestions) {
+    if (dataAnswered && dataQuestions?.topic.data) {
       const idsToRemove =
         dataAnswered.usersPermissionsUser.data.attributes.answered_multi_choice_questions.data.map(
           (question) => question.id

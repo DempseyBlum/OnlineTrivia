@@ -45,7 +45,7 @@ export default function QuestionBody({
   const [shuffled, setShuffled] = useState(false);
   const [questionAnswered, setQestionAnswered] = useState(false);
 
-  function GetQuestions() {
+  function GetChoices() {
     // Shuffle questions
     if (data) {
       const answers = [
@@ -107,7 +107,7 @@ export default function QuestionBody({
           <div className={style.questionText}>
             <p>{data.question.data.attributes.body}</p>
           </div>
-          <div className={style.answersWrapper}>{GetQuestions()}</div>
+          <div className={style.answersWrapper}>{GetChoices()}</div>
         </div>
       )}
       {/* <div className={style.questionControls}>

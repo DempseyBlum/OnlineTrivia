@@ -60,29 +60,25 @@ export default function HomePage({
 
   return (
     <div className={style.topicTile} key={topic.id.toString()}>
-      <Link to={"/topic/" + topic.id}>
-        <button className={style.topicButton}>
-          <h3 className={style.topicName}>{topic.attributes.display_name}</h3>
-          <div className={style.topicInfo}>
-            {dataUserQuestionIds && dataTopicQuestions ? (
-              <p>
-                Answered:{" "}
-                {
-                  dataUserQuestionIds.usersPermissionsUser.data.attributes
-                    .answered_multi_choice_questions.data.length
-                }{" "}
-                /{" "}
-                {
-                  dataTopicQuestions.topic.data.attributes
-                    .multi_choice_questions.data.length
-                }
-              </p>
-            ) : (
-              <p>Loading...</p>
-            )}
-          </div>
-        </button>
-      </Link>
+      <h3 className={style.topicName}>{topic.attributes.display_name}</h3>
+      <div className={style.topicInfo}>
+        {dataUserQuestionIds && dataTopicQuestions ? (
+          <p>
+            Answered:{" "}
+            {
+              dataUserQuestionIds.usersPermissionsUser.data.attributes
+                .answered_multi_choice_questions.data.length
+            }{" "}
+            /{" "}
+            {
+              dataTopicQuestions.topic.data.attributes.multi_choice_questions
+                .data.length
+            }
+          </p>
+        ) : (
+          <p>Loading...</p>
+        )}
+      </div>
     </div>
   );
 }

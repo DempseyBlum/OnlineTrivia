@@ -7,6 +7,20 @@ import StandardQuestion from "../components/questionModals/standardQuestion";
 import { ADD_ANSWERED_QUESTION } from "../../mutations/userMutations";
 import { useMutation } from "@apollo/client";
 
+const customModalStyle = {
+  content: {
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+  },
+};
+
+// Make sure to bind modal to your appElement (https://reactcommunity.org/react-modal/accessibility/)
+Modal.setAppElement("body");
+
 export default function BoardPage({ userID }: { userID: string }) {
   useEffect(() => {
     document.title = titleCreator("Boardpage");
@@ -55,9 +69,10 @@ export default function BoardPage({ userID }: { userID: string }) {
         isOpen={modalIsOpen}
         onAfterOpen={afterOpenModal}
         onRequestClose={closeModal}
-        // style={customStyles}
+        style={customModalStyle}
         contentLabel="Question Modal"
       >
+        <div>TEST</div>
         <StandardQuestion
           topicID={topicID}
           userID={userID}
