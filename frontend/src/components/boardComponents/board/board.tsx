@@ -4,8 +4,12 @@ import BoardTile from "../boardTile/boardTile";
 import { BoardInitialiser } from "../../../../utils/boardInitialiser";
 import { simpleBoxBoardTemplate } from "../../../boardTemplates/simpleBox";
 
-export default function Board({}: {}) {
-  const topicIds = [1, 2, 3, 4];
+export default function Board({
+  AskQuestionCallback,
+}: {
+  AskQuestionCallback: (topicID: string) => void;
+}) {
+  const topicIds = ["1", "2", "3", "4"];
   const boardMap = BoardInitialiser(topicIds, simpleBoxBoardTemplate);
 
   console.log(boardMap);
@@ -21,9 +25,10 @@ export default function Board({}: {}) {
               }
               return (
                 <BoardTile
-                  tileId={tile.tileId}
-                  topicId={tile.topicId}
+                  tileID={tile.tileID}
+                  topicID={tile.topicID}
                   coordinates={{ x: columnIndex, y: rowIndex }}
+                  AskQuestionCallback={AskQuestionCallback}
                 />
               );
             })}

@@ -3,19 +3,23 @@ import style from "./boardTile.module.scss";
 import { Link } from "react-router-dom";
 
 export default function BoardTile({
-  tileId,
-  topicId,
+  tileID,
+  topicID,
   coordinates,
+  AskQuestionCallback,
 }: {
-  tileId: number;
-  topicId: number;
+  tileID: number;
+  topicID: string;
   coordinates: { x: number; y: number };
+  AskQuestionCallback: (topicID: string) => void;
 }) {
+  function SelectQuestion() {
+    AskQuestionCallback(topicID);
+  }
+
   return (
     <div className={style.boardTileWrapper}>
-      <Link to={"/board/question/" + topicId}>
-        <button>{topicId}</button>
-      </Link>
+      <button onClick={SelectQuestion}>{topicID}</button>
     </div>
   );
 }

@@ -4,7 +4,6 @@ import { BrowserRouter, Routes, Route, HashRouter } from "react-router-dom";
 import Header from "../components/header/header";
 import Homepage from "./homepage";
 import BoardPage from "./boardPage";
-import StandardQuestion from "./questionPages/standardQuestion";
 
 // initialize apollo client
 const client = new ApolloClient({
@@ -24,10 +23,6 @@ function App() {
             <Routes>
               <Route path="/" element={<Homepage userID={"1"} />} />
               <Route path="/board" element={<BoardPage userID={"1"} />} />
-              <Route
-                path="/board/question/:topicId"
-                element={<StandardQuestion userID={"1"} />}
-              />
             </Routes>
           </div>
         </div>

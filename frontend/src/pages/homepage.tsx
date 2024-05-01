@@ -8,7 +8,7 @@ import {
 } from "../../queries/questionQueries";
 import { useStrapiQuery } from "../../hooks/useStrapiQuery";
 import { OperationVariables } from "@apollo/client";
-import MultiChoiceQuestion from "../components/multiChoiceQuestion/multiChoiceQuestion";
+import MultiChoiceQuestion from "../components/questionBody/questionBody";
 import { Link } from "react-router-dom";
 import {
   UserQuestionIDsReturnType,
@@ -46,6 +46,10 @@ export default function HomePage({ userID }: { userID: string }) {
   return (
     <div className={style.homePageWrapper}>
       <section className={style.questionSection}>
+        <h2 className={style.startGameHeader}>Go To Board</h2>
+        <Link to="/board">
+          <button className={style.startGameButton}>Start Game</button>
+        </Link>
         <h2 className={style.topicsHeader}>TOPICS</h2>
         <div className={style.topicsSelector}>
           {data &&

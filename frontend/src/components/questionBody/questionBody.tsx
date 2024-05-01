@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import style from "./multiChoiceQuestion.module.scss";
+import style from "./questionBody.module.scss";
 import { faBars, faUser } from "@fortawesome/free-solid-svg-icons";
 import { NavMenu } from "../navMenu/navMenu";
 import { useEffect, useState } from "react";
@@ -19,12 +19,14 @@ import {
 } from "../../../queries/userQueries";
 import { Link } from "react-router-dom";
 
-export default function MultiChoiceQuestionBody({
+export default function QuestionBody({
   questionID,
   userID,
+  AnswerQuestionCallback,
 }: {
   questionID: string;
   userID: string;
+  AnswerQuestionCallback: (questionID: string, result: boolean) => void;
 }) {
   const {
     loading,
@@ -91,20 +93,8 @@ export default function MultiChoiceQuestionBody({
     }
   }
 
-  const [
-    updateUser,
-    { data: mutateData, loading: mutateLoading, error: mutateError },
-  ] = useMutation(ADD_ANSWERED_QUESTION);
-
   async function CheckAnswer(isCorrect: boolean) {
-    setQestionAnswered(true);
-
-    updateUser({
-      variables: {
-        userID: "1",
-        newQuestionIDs: [questionID],
-      },
-    });
+    AnswerQuestionCallback(questionID, isCorrect);
   }
 
   return (
@@ -120,7 +110,7 @@ export default function MultiChoiceQuestionBody({
           <div className={style.answersWrapper}>{GetQuestions()}</div>
         </div>
       )}
-      <div className={style.questionControls}>
+      {/* <div className={style.questionControls}>
         <Link to={"/"}>
           <button className={style.backButton}>BACK</button>
         </Link>
@@ -135,7 +125,7 @@ export default function MultiChoiceQuestionBody({
             NEXT QUESTION
           </button>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }

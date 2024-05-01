@@ -1,26 +1,27 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import style from "./multiChoiceQuestion.module.scss";
-import { faBars, faUser } from "@fortawesome/free-solid-svg-icons";
-import { NavMenu } from "../navMenu/navMenu";
-import { useEffect, useState } from "react";
-import { OperationVariables } from "@apollo/client";
+import React, { useCallback, useEffect, useState } from "react";
+import { titleCreator } from "../../../utils/titleCreator";
+import style from "../styles/homePage.module.scss";
+import { useParams } from "react-router-dom";
+import QuestionBody from "../questionBody/questionBody";
 import { useStrapiQuery } from "../../../hooks/useStrapiQuery";
-import {
-  TopicQuestionsReturnType,
-  topicQuestionsQuery,
-} from "../../../queries/questionQueries";
-import MultiChoiceQuestionBody from "./multiChoiceQuestionBody";
 import {
   UserQuestionIDsReturnType,
   userAnsweredQuestionIDsByTopic,
 } from "../../../queries/userQueries";
+import { OperationVariables } from "@apollo/client";
+import {
+  TopicQuestionsReturnType,
+  topicQuestionsQuery,
+} from "../../../queries/questionQueries";
 
-export default function MultiChoiceQuestion({
-  topicID,
+export default function StandardQuestion({
   userID,
+  topicID,
+  AnswerQuestionCallback,
 }: {
-  topicID: string;
   userID: string;
+  topicID: string;
+  AnswerQuestionCallback: (questionID: string, result: boolean) => void;
 }) {
   // Get question IDs that User hasn't had yet. Then pick randomely and bring that one down.
 
@@ -84,10 +85,11 @@ export default function MultiChoiceQuestion({
         </>
       )}
       {(dataAnswered || dataQuestions) && questionID && (
-        <MultiChoiceQuestionBody
+        <QuestionBody
           questionID={questionID}
           userID={userID}
-        ></MultiChoiceQuestionBody>
+          AnswerQuestionCallback={AnswerQuestionCallback}
+        ></QuestionBody>
       )}
     </div>
   );
