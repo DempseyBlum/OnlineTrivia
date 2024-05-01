@@ -17,11 +17,11 @@ export default function BoardTile({
     AskQuestionCallback(topicID);
   }
 
-  console.log("topicID:", topicID);
-
   return (
     <div className={style.boardTileWrapper}>
-      <button onClick={SelectQuestion}>{topicID}</button>
+      <button onClick={SelectQuestion} className={style.boardTileButton}>
+        {topicID}
+      </button>
     </div>
   );
 }

@@ -42,6 +42,8 @@ export default function BoardPage({ userID }: { userID: string }) {
   }
 
   function AskQuestion(topicID: string) {
+    // TODO: account for players closing the modal without answering the question.
+    // Keep the same topicID until the question is answered.
     setTopicID(topicID);
     openModal();
   }
@@ -58,7 +60,11 @@ export default function BoardPage({ userID }: { userID: string }) {
         newQuestionIDs: [questionID],
       },
     });
-    closeModal();
+
+    const timeout = setTimeout(() => {
+      closeModal();
+    }, 3500);
+
     // TODO: Grant player additional turn if they got question right. Otherwise, end turn.
   }
 
@@ -72,7 +78,6 @@ export default function BoardPage({ userID }: { userID: string }) {
         style={customModalStyle}
         contentLabel="Question Modal"
       >
-        <div>TEST</div>
         <StandardQuestion
           topicID={topicID}
           userID={userID}
