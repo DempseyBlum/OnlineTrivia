@@ -94,6 +94,7 @@ export default function QuestionBody({
   }
 
   async function CheckAnswer(isCorrect: boolean) {
+    setQestionAnswered(true);
     AnswerQuestionCallback(questionID, isCorrect);
   }
 

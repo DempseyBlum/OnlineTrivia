@@ -8,7 +8,7 @@ import {
   UserQuestionIDsReturnType,
   userAnsweredQuestionIDsByTopic,
 } from "../../../queries/userQueries";
-import { OperationVariables } from "@apollo/client";
+import { OperationVariables, useMutation } from "@apollo/client";
 import {
   TopicQuestionsReturnType,
   topicQuestionsQuery,
@@ -71,7 +71,16 @@ export default function StandardQuestion({
       const randomIndex = Math.floor(
         Math.random() * unansweredQuestions.length
       );
-      setQuestionID(unansweredQuestions[randomIndex].id);
+
+      if (unansweredQuestions.length > 0) {
+        setQuestionID(unansweredQuestions[randomIndex].id);
+      } else {
+        setQuestionID(
+          dataQuestions.topic.data.attributes.multi_choice_questions.data[
+            randomIndex
+          ].id
+        );
+      }
     }
   }, [dataAnswered, dataQuestions]);
 

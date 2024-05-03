@@ -33,11 +33,24 @@ module.exports = {
             },
           });
 
-        if (user) {
-          event.params.data.answered_multi_choice_questions = [
-            ...user.answered_multi_choice_questions,
-            ...event.params.data.answered_multi_choice_questions,
-          ];
+        // If it is a single id, it should be pushed to the array instead of overriding it.
+        if (event.params.data.answered_multi_choice_questions.length === 1) {
+          // Check if id is already in array If it is not, push it to the array.
+          const isAlreadyAnswered = user.answered_multi_choice_questions.some(
+            (question) =>
+              question.id ==
+              event.params.data.answered_multi_choice_questions[0]
+          );
+
+          if (user && !isAlreadyAnswered) {
+            event.params.data.answered_multi_choice_questions = [
+              ...user.answered_multi_choice_questions,
+              ...event.params.data.answered_multi_choice_questions,
+            ];
+          } else {
+            event.params.data.answered_multi_choice_questions =
+              user.answered_multi_choice_questions;
+          }
         }
       },
     });
