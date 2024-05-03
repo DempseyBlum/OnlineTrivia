@@ -68,13 +68,17 @@ export default function StandardQuestion({
           (question) => !idsToRemove.includes(question.id)
         );
 
-      const randomIndex = Math.floor(
-        Math.random() * unansweredQuestions.length
-      );
-
       if (unansweredQuestions.length > 0) {
+        const randomIndex = Math.floor(
+          Math.random() * unansweredQuestions.length
+        );
         setQuestionID(unansweredQuestions[randomIndex].id);
       } else {
+        const randomIndex = Math.floor(
+          Math.random() *
+            dataQuestions.topic.data.attributes.multi_choice_questions.data
+              .length
+        );
         setQuestionID(
           dataQuestions.topic.data.attributes.multi_choice_questions.data[
             randomIndex
