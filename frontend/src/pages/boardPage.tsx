@@ -6,6 +6,7 @@ import Modal from "react-modal";
 import StandardQuestion from "../components/questionModals/standardQuestion";
 import { ADD_ANSWERED_QUESTION } from "../../mutations/userMutations";
 import { useMutation } from "@apollo/client";
+import BoardWithSVG from "../components/boardComponents/board/boardWithSVG";
 
 const customModalStyle = {
   content: {
@@ -70,7 +71,7 @@ export default function BoardPage({ userID }: { userID: string }) {
 
   return (
     <div className={style.boardPageWrapper}>
-      <Board AskQuestionCallback={AskQuestion} />
+      <BoardWithSVG AskQuestionCallback={AskQuestion} />
       <Modal
         isOpen={modalIsOpen}
         onAfterOpen={afterOpenModal}

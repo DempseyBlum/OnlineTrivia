@@ -14,3 +14,8 @@
   flex-direction: row;
   width: 100%;
 }
+
+.boardWrapper:first-child {
+  height: 900px;
+  width: 900px;
+}

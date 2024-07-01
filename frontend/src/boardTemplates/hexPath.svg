@@ -1,0 +1,13 @@
+<svg id="SVGRoot" version="1.1" viewBox="0 0 900 900" xmlns="http://www.w3.org/2000/svg">
+ <style type="text/css">g.prefab path {
+  vector-effect:non-scaling-stroke;
+  -inkscape-stroke:hairline;
+  fill: none;
+  fill-opacity: 1;
+  stroke-opacity: 1;
+  stroke: #00349c;
+}</style>
+ <g class="prefab" transform="translate(-64.677 275.15)" fill="#fff" stroke="#000" stroke-width="2">
+  <path d="m449.44 24.836h162.78l81.389 144.81-81.389 144.81h-162.78l-81.389-144.81z" stroke-width="8.2491"/>
+ </g>
+</svg>
