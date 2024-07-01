@@ -1,21 +1,15 @@
-.boardWrapper {
+.boardContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  padding-top: 30px;
-  width: 100%5;
-}
-
-.boardRow {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  flex-direction: row;
   width: 100%;
 }
 
-.boardWrapper:first-child {
-  height: 900px;
-  width: 900px;
+.boardContainer:first-child {
+  max-height: calc(100vh - 4rem);
+  max-width: 100vw;
 }
