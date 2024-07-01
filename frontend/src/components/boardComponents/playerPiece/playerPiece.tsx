@@ -39,14 +39,22 @@ export default function PlayerPiece({
     if (boardSVGRef.current && pieceRef.current && boardContainerRef.current) {
       const path = boardSVGRef.current.childNodes[0] as SVGPathElement;
 
+      // Calc relative postion of Path coordinates relative to size of the SVG
       const viewBoxW = boardSVGRef.current.viewBox.baseVal.width;
       const viewBoxH = boardSVGRef.current.viewBox.baseVal.width;
 
-      const containerH = boardContainerRef.current.clientHeight;
-      const containerW = boardContainerRef.current.clientWidth;
+      const currentH = boardSVGRef.current.clientHeight;
+      const currentW = boardSVGRef.current.clientWidth;
 
-      const scaleW = containerW / viewBoxW;
-      const scaleH = containerH / viewBoxH;
+      const scaleW = currentW / viewBoxW;
+      const scaleH = currentH / viewBoxH;
+
+      // Calc offset of Path coordinates relative to parent container
+      // NOTE: Board is always smaller or same size at container
+      const containerW = boardContainerRef.current.clientWidth;
+      const containerH = boardContainerRef.current.clientHeight;
+      const widthOffset = (containerW - currentW) / 2;
+      const heightOffset = (containerH - currentH) / 2;
 
       const pathLength = path.getTotalLength();
       const pathCoords = path.getPointAtLength(
@@ -54,10 +62,14 @@ export default function PlayerPiece({
       );
 
       pieceRef.current.style.left = `${
-        (pathCoords.x + 64) * scaleW - pieceRef.current.clientWidth / 2
+        (pathCoords.x - 64) * scaleW -
+        pieceRef.current.clientWidth / 2 +
+        widthOffset
       }px`; // 64 is from a position translate in the svg file
       pieceRef.current.style.top = `${
-        (pathCoords.y + 275) * scaleH - pieceRef.current.clientHeight / 2
+        (pathCoords.y + 275) * scaleH -
+        pieceRef.current.clientHeight / 2 +
+        heightOffset
       }px`; // 275 is from a position translate in the svg file
     }
   }
