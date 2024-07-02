@@ -8,6 +8,9 @@ import React from "react";
 // TODO: Need to figure out how to account for the size of the board (the board's viewbox determines it's size and coords).
 // TODO: Need to have piece move along the path even around turns (when moving more than 1 increment).
 
+// TODO: Split path and tiles into separate components maybe. Split the path and tiles from the SVG groups. 
+//       Pass the info for the paths to the path component, tiles to tile builder component etc.
+
 export default function PlayerPiece({
   boardSVGRef,
   boardContainerRef,
@@ -38,6 +41,12 @@ export default function PlayerPiece({
   function MovePiece(increment: number) {
     if (boardSVGRef.current && pieceRef.current && boardContainerRef.current) {
       const path = boardSVGRef.current.childNodes[0] as SVGPathElement;
+      
+      boardSVGRef.current.childNodes.forEach((child) =>{
+        console.log(child.firstChild)
+        const childWithId = child.firstChild as SVGGeometryElement
+        console.log(childWithId.id)
+      })
 
       // Calc relative postion of Path coordinates relative to size of the SVG
       const viewBoxW = boardSVGRef.current.viewBox.baseVal.width;
@@ -56,10 +65,10 @@ export default function PlayerPiece({
       const widthOffset = (containerW - currentW) / 2;
       const heightOffset = (containerH - currentH) / 2;
 
-      const pathLength = path.getTotalLength();
-      const pathCoords = path.getPointAtLength(
+      const pathLength = 0 //path.getTotalLength();
+      const pathCoords = {x: 0, y: 0} /*path.getPointAtLength(
         (pathLength / MaxIncrements) * increment
-      );
+      );*/
 
       pieceRef.current.style.left = `${
         (pathCoords.x - 64) * scaleW -

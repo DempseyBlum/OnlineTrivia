@@ -7,7 +7,10 @@
   stroke-opacity: 1;
   stroke: #00349c;
 }</style>
- <g class="prefab" transform="translate(-64.677 275.15)" fill="#fff" stroke="#000" stroke-width="2">
-  <path d="m449.44 24.836h162.78l81.389 144.81-81.389 144.81h-162.78l-81.389-144.81z" stroke-width="8.2491"/>
+ <g id="pathGroup" class="prefab" transform="translate(-64.677 275.15)" fill="#fff" stroke="#000" stroke-width="2">
+  <path id="path1" d="m449.44 24.836h162.78l81.389 144.81-81.389 144.81h-162.78l-81.389-144.81z" stroke-width="8.2491"/>
+ </g>
+  <g id="tileGroup" class="prefab" transform="translate(-64.677 575.15)" fill="#fff" stroke="#000" stroke-width="2">
+  <path id="path2" d="m449.44 24.836h162.78l81.389 144.81-81.389 144.81h-162.78l-81.389-144.81z" stroke-width="8.2491"/>
  </g>
 </svg>
